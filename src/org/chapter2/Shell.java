@@ -1,19 +1,21 @@
 package org.chapter2;
 
-import edu.princeton.cs.algs4.StdIn;
 import edu.princeton.cs.algs4.StdOut;
 
-public class Selection {
+public class Shell {
 	public static void sort(Comparable[] a){
 		int N = a.length;
-		for(int i=0;i<N;i++){
-			int min = i; //取index
-			for(int j=i+1;j<N;j++){//循环选择出最小的那一个
-				if(less(a[j], a[min])){
-					min = j;	
+		int h = 1;
+		while(h < N/3){ //N需要从6开始1,4,13,40,121,364,1093，精华所在
+			h = 3*h + 1;
+		}
+		while(h >= 1){
+			for(int i=h;i<N;i++){
+				for(int j=i;j>=h && less(a[j],a[j-h]);j -= h){
+					exch(a, j, j-h);
 				}
 			}
-			exch(a, i, min);//注意放置的位置
+			h = h/3;
 		}
 	}
 	private static boolean less(Comparable v, Comparable w){
@@ -26,7 +28,7 @@ public class Selection {
 	}
 	private static boolean isSorted(Comparable[] a){
 		for(int i=1;i<a.length;i++){
-			if(less(a[i], a[i-1])){
+			if(less(a[i],a[i-1])){
 				return false;
 			}
 		}
@@ -34,14 +36,8 @@ public class Selection {
 	}
 	private static void show(Comparable[] a){
 		for(int i=0;i<a.length;i++){
-			StdOut.print(a[i] + " ");
+			StdOut.println(a[i] + " ");
 		}
 		StdOut.println();
 	}
-	public static void main(String[] args) {
-		String[] a = StdIn.readStrings();//排序字符
-		sort(a);
-		assert isSorted(a);
-		show(a);
-	}
-}
+}	
