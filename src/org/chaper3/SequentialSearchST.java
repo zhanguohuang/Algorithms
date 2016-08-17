@@ -26,6 +26,6 @@ public class SequentialSearchST<Key, Value> {
 				return;
 			}
 		}
-		first = new Node(key, val, first);//关键所在
+		first = new Node(key, val, first);//关键所在,从头部插入的
 	}
 }
